@@ -34,6 +34,7 @@ public class SnakeGame {
             if (event.getKey() == Key.RIGHT_ARROW) {
                 snake.moveHorizontalRight(100);
             }
+            System.out.println(snake.intersectWall());
         });
 
         canvas.onKeyDown(event -> {
