@@ -9,6 +9,7 @@ public class SnakeGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 800;
     public static CanvasWindow canvas;
+    private int randomDirection = (int) (1 + Math.random() * 2);
 
     private Snake snake;
     private Food food;
@@ -24,33 +25,43 @@ public class SnakeGame {
 
     public void startGame() {
         canvas.animate(() -> {
-
+            if(randomDirection == 1){
+                snake.moveByX(20);
+            }else{
+                snake.moveByY(20);
+            }
+           
             // if(snake.intersectWall()){
             // canvas.closeWindow();
             // }
+            if(snake.intersectFood(canvas)){
+                food.removeFromCanvas(canvas);
+                food = new Food((int) (Math.random() * 1000), (int) (Math.random() * 800));
+                food.addToCanvas(canvas);
+            }
         });
 
         canvas.onKeyDown(event -> {
             if (event.getKey() == Key.RIGHT_ARROW) {
-                snake.moveHorizontalRight(100);
+                snake.turnRight(100);
             }
         });
 
         canvas.onKeyDown(event -> {
             if (event.getKey() == Key.DOWN_ARROW) {
-                snake.moveVerticalDown(100);
+                snake.turnDown(100);
             }
         });
 
         canvas.onKeyDown(event -> {
             if (event.getKey() == Key.LEFT_ARROW) {
-                snake.moveHorizontalLeft(100);
+                snake.turnLeft(100);
             }
         });
 
         canvas.onKeyDown(event -> {
             if (event.getKey() == Key.UP_ARROW) {
-                snake.moveVerticalUp(100);
+                snake.turnUp(100);
             }
         });
 
@@ -60,7 +71,7 @@ public class SnakeGame {
     private void createBackGround() {
         snake = new Snake(100, 100);
         snake.addToCanvas(canvas);
-        food = new Food((int) (Math.random() * 150), (int) (Math.random() * 100));
+        food = new Food((int) (Math.random() * 1000), (int) (Math.random() * 800));
         food.addToCanvas(canvas);
     }
 
