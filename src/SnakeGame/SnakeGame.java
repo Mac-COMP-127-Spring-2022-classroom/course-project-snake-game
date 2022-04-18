@@ -11,7 +11,6 @@ public class SnakeGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 800;
     public static CanvasWindow canvas;
-    private int randomDirection = (int) (1 + Math.random() * 2);
 
     private Snake snake;
     private Food food;
@@ -72,6 +71,7 @@ public class SnakeGame {
 
     /**
      * Spawn food at random position after food is eaten
+     * Lengthen the snake
      */
     private void food_Lost_Spawn() {
         if(snake.intersectFood(canvas)){
