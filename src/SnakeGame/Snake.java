@@ -10,63 +10,65 @@ public class Snake extends Rectangle {
 
     public static double SNAKE_WIDTH = 30;
 
-    private double centerX;
-    private double centerY;
+    private double xPos;
+    private double yPos;
 
     double dX = 0.1;
     double dY = 0.1;
-
-
+     
     public Snake(double xPos, double yPos) {
-        super(xPos, yPos, SNAKE_WIDTH, SNAKE_WIDTH);
+        super(0, 0, SNAKE_WIDTH, SNAKE_WIDTH);
+        this.setCenter(xPos,yPos);
+        this.xPos = xPos;
+        this.yPos = yPos;
         this.setFillColor(Color.RED);
 
 
     }
 
     public void turnLeft(double dt) {
-        centerX -= dX * dt;
-        this.setCenter(centerX, centerY);
+        xPos -= dX * dt;
+        this.setCenter(xPos, yPos);
 
 
     }
 
     public void turnRight(double dt) {
-        centerX += dX * dt;
-        this.setCenter(centerX, centerY);
+        xPos += dX * dt;
+        this.setCenter(xPos, yPos);
 
 
     }
 
     public void turnUp(double dt) {
-        centerY -= dY * dt;
-        this.setCenter(centerX, centerY);
+        yPos -= dY * dt;
+        this.setCenter(xPos, yPos);
 
 
     }
 
     public void turnDown(double dt) {
-        centerY += dY * dt;
-        this.setCenter(centerX, centerY);
+        yPos += dY * dt;
+        this.setCenter(xPos, yPos);
 
 
     }
 
     public void moveByY(double dt){
-        centerY += dY * dt;
-        this.setCenter(centerX, centerY);
+        yPos += dY * dt;
+        this.setCenter(xPos, yPos);
     }
 
     public void moveByX(double dt){
-        centerX += dX * dt;
-        this.setCenter(centerX, centerY);
+        xPos += dX * dt;
+        this.setCenter(xPos, yPos);
     }
 
     public boolean intersectWall() {
-        if (centerY + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || centerY <= 0) {
+        if (yPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || yPos <= 0) {
             return true;
         }
-        if (centerX + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || centerX <= 0) {
+        if (xPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || xPos <= 0) {
             return true;
         }
         return false;
@@ -94,6 +96,8 @@ public class Snake extends Rectangle {
         }
         return false;
     }
+
+    
 
 
     public void addToCanvas(CanvasWindow canvas) {
