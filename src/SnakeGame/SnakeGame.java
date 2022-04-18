@@ -39,27 +39,27 @@ public class SnakeGame {
             if (key_pressed == 1) {
                 snake.turnRight(dt);
                 if (snake.intersectFood(canvas)) {
-                    addBody(snake.getX(), snake.getY(), canvas);
+                    addBody(snake.getX() - snake.getWidth(), snake.getY(), canvas);
                 }
                 moveByHead(snakeBody, key_pressed);
             } else if (key_pressed == 2) {
                 snake.turnLeft(dt);
                 if (snake.intersectFood(canvas)) {
-                    addBody(snake.getX(), snake.getY(), canvas);
+                    addBody(snake.getX() + snake.getWidth(), snake.getY(), canvas);
 
                 }
                 moveByHead(snakeBody, key_pressed);
             } else if (key_pressed == 3) {
                 snake.turnUp(dt);
                 if (snake.intersectFood(canvas)) {
-                    addBody(snake.getX(), snake.getY(), canvas);
+                    addBody(snake.getX(), snake.getY() + snake.getWidth(), canvas);
 
                 }
                 moveByHead(snakeBody, key_pressed);
             } else if (key_pressed == 4) {
                 snake.turnDown(dt);
                 if (snake.intersectFood(canvas)) {
-                    addBody(snake.getX(), snake.getY(), canvas);
+                    addBody(snake.getX(), snake.getY() - snake.getWidth() , canvas);
 
                 }
                 moveByHead(snakeBody, key_pressed);
@@ -111,7 +111,7 @@ public class SnakeGame {
     }
 
     public void moveByHead(ArrayList<Snake> snakeBodies, int key_pressed) {
-        for (int i = 0; i < snakeBodies.size(); i++) {
+        for (int i = 1; i < snakeBodies.size(); i++) {
             if (key_pressed == 1) {
                 snakeBody.get(i).turnRight(dt);
             } else if (key_pressed == 2) {
