@@ -1,6 +1,7 @@
 package SnakeGame;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Point;
@@ -82,7 +83,7 @@ public class Snake extends Rectangle {
         Point point4 = new Point(centerPoint.getX() - SNAKE_WIDTH/2, centerPoint.getY());
 
         if (canvas.getElementAt(point1) != null
-            && canvas.getElementAt(point1).getClass() == Food.class) {
+            && canvas.getElementAt(point1).getClass() == Food.class) {  
             return true;
         } else if (canvas.getElementAt(point2) != null
             && canvas.getElementAt(point2).getClass() == Food.class) {
@@ -97,12 +98,12 @@ public class Snake extends Rectangle {
         return false;
     }
 
-    
-
 
     public void addToCanvas(CanvasWindow canvas) {
         canvas.add(this);
     }
+
+ 
 
 
 }
