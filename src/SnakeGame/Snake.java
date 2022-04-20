@@ -12,22 +12,22 @@ public class Snake extends Rectangle {
 
     public static double SNAKE_WIDTH = 30;
 
-    private double xPos;
-    private double yPos;
+    private double centerX;
+    private double centerY;
 
     double dX = 0.1;
     double dY = 0.1;
 
+<<<<<<< HEAD
     private Snake child;
     private int pastDirection;
 
     // private Direction pastDirection;
+=======
+>>>>>>> e7816f346165d45e5a2c8577b63e240cadd0d56e
 
     public Snake(double xPos, double yPos) {
-        super(0, 0, SNAKE_WIDTH, SNAKE_WIDTH);
-        this.setCenter(xPos, yPos);
-        this.xPos = xPos;
-        this.yPos = yPos;
+        super(xPos, yPos, SNAKE_WIDTH, SNAKE_WIDTH);
         this.setFillColor(Color.RED);
         snakeList = new ArrayList<>();
         snakeList.add(this);
@@ -35,28 +35,52 @@ public class Snake extends Rectangle {
 
     }
 
-    public double getXpos() {
-        return xPos;
+    public void turnLeft(double dt) {
+        centerX -= dX * dt;
+        this.setCenter(centerX, centerY);
+
+
     }
 
-    public double getYpos() {
-        return yPos;
+    public void turnRight(double dt) {
+        centerX += dX * dt;
+        this.setCenter(centerX, centerY);
+
+
     }
 
-    public double setXpos(double xPos) {
-        return this.xPos = xPos;
+    public void turnUp(double dt) {
+        centerY -= dY * dt;
+        this.setCenter(centerX, centerY);
+
+
     }
 
-    public double setYpos(double yPos) {
-        return this.yPos = yPos;
-    };
+    public void turnDown(double dt) {
+        centerY += dY * dt;
+        this.setCenter(centerX, centerY);
 
 
+    }
+
+<<<<<<< HEAD
+=======
+    public void moveByY(double dt){
+        centerY += dY * dt;
+        this.setCenter(centerX, centerY);
+    }
+
+    public void moveByX(double dt){
+        centerX += dX * dt;
+        this.setCenter(centerX, centerY);
+    }
+
+>>>>>>> e7816f346165d45e5a2c8577b63e240cadd0d56e
     public boolean intersectWall() {
-        if (yPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || yPos <= 0) {
+        if (centerY + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || centerY <= 0) {
             return true;
         }
-        if (xPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || xPos <= 0) {
+        if (centerX + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || centerX <= 0) {
             return true;
         }
         return false;
@@ -64,6 +88,7 @@ public class Snake extends Rectangle {
 
     public boolean intersectFood(CanvasWindow canvas) {
         Point centerPoint = this.getCenter();
+<<<<<<< HEAD
         Point point1 = new Point(centerPoint.getX() + SNAKE_WIDTH / 2, centerPoint.getY());
         Point point2 = new Point(centerPoint.getX() - SNAKE_WIDTH / 2, centerPoint.getY());
         Point point3 = new Point(centerPoint.getX(), centerPoint.getY() - SNAKE_WIDTH / 2);
@@ -77,6 +102,15 @@ public class Snake extends Rectangle {
             child.addToCanvas(canvas);
             snakeList.add(child);
 
+=======
+        Point point1 = new Point(centerPoint.getX(), centerPoint.getY() - SNAKE_WIDTH/2);
+        Point point2 = new Point(centerPoint.getX(), centerPoint.getY() + SNAKE_WIDTH/2);
+        Point point3 = new Point(centerPoint.getX() + SNAKE_WIDTH/2, centerPoint.getY());
+        Point point4 = new Point(centerPoint.getX() - SNAKE_WIDTH/2, centerPoint.getY());
+
+        if (canvas.getElementAt(point1) != null
+            && canvas.getElementAt(point1).getClass() == Food.class) {  
+>>>>>>> e7816f346165d45e5a2c8577b63e240cadd0d56e
             return true;
         } else if (canvas.getElementAt(point2) != null
             && canvas.getElementAt(point2).getClass() == Food.class) {
@@ -114,6 +148,7 @@ public class Snake extends Rectangle {
         canvas.add(this);
     }
 
+<<<<<<< HEAD
     public void turnLeft(double dt) {
         xPos -= dX * dt;
         this.setCenter(xPos, yPos);
@@ -174,6 +209,9 @@ public class Snake extends Rectangle {
         ;
 
     }
+=======
+ 
+>>>>>>> e7816f346165d45e5a2c8577b63e240cadd0d56e
 
 
     // public void move(int direction, Snake child) {
