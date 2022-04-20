@@ -16,6 +16,7 @@ public class SnakeGame {
     public static CanvasWindow canvas;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     private int randomDirection = (int) (1 + Math.random() * 2);
     // private static Array
     private ArrayList<Snake> snakeBody;
@@ -23,6 +24,10 @@ public class SnakeGame {
 =======
 
 >>>>>>> e735d6f6d9a57603a7a94aa116858ee98b50a246
+=======
+    private int randomDirection = (int) (1 + Math.random() * 2);
+
+>>>>>>> parent of e735d6f (Update SnakeGame.java)
 =======
     private int randomDirection = (int) (1 + Math.random() * 2);
 
