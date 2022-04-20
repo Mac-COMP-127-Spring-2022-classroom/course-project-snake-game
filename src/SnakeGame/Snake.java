@@ -16,14 +16,10 @@ public class Snake extends Rectangle {
 
     double dX = 0.1;
     double dY = 0.1;
-
-    private Snake child;
-
-    // private Direction pastDirection;
-
+     
     public Snake(double xPos, double yPos) {
         super(0, 0, SNAKE_WIDTH, SNAKE_WIDTH);
-        this.setCenter(xPos, yPos);
+        this.setCenter(xPos,yPos);
         this.xPos = xPos;
         this.yPos = yPos;
         this.setFillColor(Color.RED);
@@ -31,29 +27,40 @@ public class Snake extends Rectangle {
 
     }
 
-    public double getXpos() {
-        return xPos;
+    public void turnLeft(double dt) {
+        xPos -= dX * dt;
+        this.setCenter(xPos, yPos);
+
+
     }
 
-    public double getYpos() {
-        return yPos;
+    public void turnRight(double dt) {
+        xPos += dX * dt;
+        this.setCenter(xPos, yPos);
+
+
     }
 
-    public double setXpos(double xPos) {
-        return this.xPos = xPos;
+    public void turnUp(double dt) {
+        yPos -= dY * dt;
+        this.setCenter(xPos, yPos);
+
+
     }
 
-    public double setYpos(double yPos) {
-        return this.yPos = yPos;
-    };
+    public void turnDown(double dt) {
+        yPos += dY * dt;
+        this.setCenter(xPos, yPos);
 
 
-    public void moveByY(double dt) {
+    }
+
+    public void moveByY(double dt){
         yPos += dY * dt;
         this.setCenter(xPos, yPos);
     }
 
-    public void moveByX(double dt) {
+    public void moveByX(double dt){
         xPos += dX * dt;
         this.setCenter(xPos, yPos);
     }
@@ -70,13 +77,13 @@ public class Snake extends Rectangle {
 
     public boolean intersectFood(CanvasWindow canvas) {
         Point centerPoint = this.getCenter();
-        Point point1 = new Point(centerPoint.getX(), centerPoint.getY() - SNAKE_WIDTH / 2);
-        Point point2 = new Point(centerPoint.getX(), centerPoint.getY() + SNAKE_WIDTH / 2);
-        Point point3 = new Point(centerPoint.getX() + SNAKE_WIDTH / 2, centerPoint.getY());
-        Point point4 = new Point(centerPoint.getX() - SNAKE_WIDTH / 2, centerPoint.getY());
+        Point point1 = new Point(centerPoint.getX(), centerPoint.getY() - SNAKE_WIDTH/2);
+        Point point2 = new Point(centerPoint.getX(), centerPoint.getY() + SNAKE_WIDTH/2);
+        Point point3 = new Point(centerPoint.getX() + SNAKE_WIDTH/2, centerPoint.getY());
+        Point point4 = new Point(centerPoint.getX() - SNAKE_WIDTH/2, centerPoint.getY());
 
         if (canvas.getElementAt(point1) != null
-            && canvas.getElementAt(point1).getClass() == Food.class) {
+            && canvas.getElementAt(point1).getClass() == Food.class) {  
             return true;
         } else if (canvas.getElementAt(point2) != null
             && canvas.getElementAt(point2).getClass() == Food.class) {
@@ -96,45 +103,7 @@ public class Snake extends Rectangle {
         canvas.add(this);
     }
 
-    public void turnLeft(double dt) {
-        xPos -= dX * dt;
-        this.setCenter(xPos, yPos);
-    }
-
-
-    public void turnRight(double dt) {
-        xPos += dX * dt;
-        this.setCenter(xPos, yPos);
-
-    }
-
-    public void turnUp(double dt) {
-        yPos -= dY * dt;
-        this.setCenter(xPos, yPos);
-
-    }
-
-
-    public void turnDown(double dt) {
-        yPos += dY * dt;
-        this.setCenter(xPos, yPos);
-    }
-
-    public void move(int direction) {
-        int dt = 10;
-        if (direction == 1) {
-            this.turnRight(dt);
-
-        } else if (direction == 2) {
-            this.turnLeft(dt);
-        } else if (direction == 3) {
-           this.turnUp(dt);
-        } else if (direction == 4) {
-            this.turnDown(dt);
-        }
-        ;
-
-    }
+ 
 
 
 }

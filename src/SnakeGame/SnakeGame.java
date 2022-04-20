@@ -33,11 +33,9 @@ public class SnakeGame {
 
 >>>>>>> parent of e735d6f (Update SnakeGame.java)
     private Snake snake;
-    private Snake child;
     private Food food;
     private int key_pressed;
     private double dt = 20;
-    private int pastDirection;
 
 
     public SnakeGame() {
@@ -47,39 +45,38 @@ public class SnakeGame {
         createBackGround();
         startGame();
 
+
     }
 
     public void startGame() {
-
         canvas.animate(() -> {
             if (key_pressed == 1) {
-                move(1);
+                snake.turnRight(dt);
                 if (snake.intersectFood(canvas)) {
-                    addBody(child.getCenter().getX() - snake.getWidth(), snake.getCenter().getY(), canvas);
-
+                    addBody(snake.getX() - snake.getWidth(), snake.getY(), canvas);
                 }
-                // moveByHead(snakeBody, key_pressed);
+                moveByHead(snakeBody, key_pressed);
             } else if (key_pressed == 2) {
-                move(2);
+                snake.turnLeft(dt);
                 if (snake.intersectFood(canvas)) {
                     addBody(snake.getX() + snake.getWidth(), snake.getY(), canvas);
 
                 }
-                // moveByHead(snakeBody, key_pressed);
+                moveByHead(snakeBody, key_pressed);
             } else if (key_pressed == 3) {
-                move(3);
+                snake.turnUp(dt);
                 if (snake.intersectFood(canvas)) {
                     addBody(snake.getX(), snake.getY() + snake.getWidth(), canvas);
 
                 }
-                // moveByHead(snakeBody, key_pressed);
+                moveByHead(snakeBody, key_pressed);
             } else if (key_pressed == 4) {
-                move(4);
+                snake.turnDown(dt);
                 if (snake.intersectFood(canvas)) {
-                    addBody(snake.getX(), snake.getY() - snake.getWidth(), canvas);
+                    addBody(snake.getX(), snake.getY() - snake.getWidth() , canvas);
 
                 }
-                // moveByHead(snakeBody, key_pressed);
+                moveByHead(snakeBody, key_pressed);
             }
             if (snake.intersectWall()) {
                 canvas.closeWindow();
@@ -104,7 +101,6 @@ public class SnakeGame {
     private void createBackGround() {
         snake = new Snake(200, 200);
         snake.addToCanvas(canvas);
-        child = snake;
         snakeBody.add(snake);
         food = new Food(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
         food.addToCanvas(canvas);
@@ -128,30 +124,27 @@ public class SnakeGame {
         new SnakeGame();
     }
 
+    public void moveByHead(ArrayList<Snake> snakeBodies, int key_pressed) {
+        for (int i = 1; i < snakeBodies.size(); i++) {
+            if (key_pressed == 1) {
+                snakeBody.get(i).turnRight(dt);
+            } else if (key_pressed == 2) {
+                snakeBody.get(i).turnLeft(dt);
+            } else if (key_pressed == 3) {
+                snakeBody.get(i).turnUp(dt);
+            } else if (key_pressed == 4) {
+                snakeBody.get(i).turnDown(dt);
 
-    public void addBody(double posX, double posY, CanvasWindow canvas) {
-        Snake snakeBody1 = new Snake(posX, posY);
-        child = snakeBody1;
-        child.addToCanvas(canvas);
-        snakeBody.add(child);
-    }
-
-    public void move(int direction) {
-        pastDirection = direction;
-        if (direction == 1) {
-            snake.turnRight(dt);
-            child.move(pastDirection);
-        } else if (direction == 2) {
-            snake.turnLeft(dt);
-            child.move(pastDirection);
-        } else if (direction == 3) {
-            snake.turnUp(dt);
-            child.move(pastDirection);
-        } else if (direction == 4) {
-            snake.turnDown(dt);
-            child.move(pastDirection);
+            }
         }
     }
 
+    public void addBody(double posX, double posY, CanvasWindow canvas) {
+        Snake snakeBody1 = new Snake(posX, posY);
+        snakeBody1.addToCanvas(canvas);
+        snakeBody.add(snakeBody1);
+        System.out.println(snakeBody);
+
+    }
 
 }
