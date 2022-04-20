@@ -1,6 +1,7 @@
 package SnakeGame;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Point;
@@ -82,8 +83,6 @@ public class Snake extends Rectangle {
 
 
     }
-
-    
 
     public boolean intersectWall() {
         if (centerY + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || centerY <= 0) {
