@@ -11,65 +11,63 @@ public class Snake extends Rectangle {
 
     public static double SNAKE_WIDTH = 30;
 
-    private double xPos;
-    private double yPos;
+    private double centerX;
+    private double centerY;
 
     double dX = 0.1;
     double dY = 0.1;
-     
+
+
     public Snake(double xPos, double yPos) {
-        super(0, 0, SNAKE_WIDTH, SNAKE_WIDTH);
-        this.setCenter(xPos,yPos);
-        this.xPos = xPos;
-        this.yPos = yPos;
+        super(xPos, yPos, SNAKE_WIDTH, SNAKE_WIDTH);
         this.setFillColor(Color.RED);
 
 
     }
 
     public void turnLeft(double dt) {
-        xPos -= dX * dt;
-        this.setCenter(xPos, yPos);
+        centerX -= dX * dt;
+        this.setCenter(centerX, centerY);
 
 
     }
 
     public void turnRight(double dt) {
-        xPos += dX * dt;
-        this.setCenter(xPos, yPos);
+        centerX += dX * dt;
+        this.setCenter(centerX, centerY);
 
 
     }
 
     public void turnUp(double dt) {
-        yPos -= dY * dt;
-        this.setCenter(xPos, yPos);
+        centerY -= dY * dt;
+        this.setCenter(centerX, centerY);
 
 
     }
 
     public void turnDown(double dt) {
-        yPos += dY * dt;
-        this.setCenter(xPos, yPos);
+        centerY += dY * dt;
+        this.setCenter(centerX, centerY);
 
 
     }
 
     public void moveByY(double dt){
-        yPos += dY * dt;
-        this.setCenter(xPos, yPos);
+        centerY += dY * dt;
+        this.setCenter(centerX, centerY);
     }
 
     public void moveByX(double dt){
-        xPos += dX * dt;
-        this.setCenter(xPos, yPos);
+        centerX += dX * dt;
+        this.setCenter(centerX, centerY);
     }
 
     public boolean intersectWall() {
-        if (yPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || yPos <= 0) {
+        if (centerY + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || centerY <= 0) {
             return true;
         }
-        if (xPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || xPos <= 0) {
+        if (centerX + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || centerX <= 0) {
             return true;
         }
         return false;

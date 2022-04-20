@@ -2,11 +2,14 @@
 package SnakeGame;
 
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.plaf.synth.SynthLabelUI;
 
+=======
+>>>>>>> parent of 3e3352c (Update - 4/17)
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
@@ -34,8 +37,11 @@ public class SnakeGame {
 >>>>>>> parent of e735d6f (Update SnakeGame.java)
     private Snake snake;
     private Food food;
+<<<<<<< HEAD
     private int key_pressed;
     private double dt = 20;
+=======
+>>>>>>> parent of 3e3352c (Update - 4/17)
 
 
     public SnakeGame() {
@@ -50,6 +56,7 @@ public class SnakeGame {
 
     public void startGame() {
         canvas.animate(() -> {
+<<<<<<< HEAD
             if (key_pressed == 1) {
                 snake.turnRight(dt);
                 if (snake.intersectFood(canvas)) {
@@ -77,14 +84,27 @@ public class SnakeGame {
 
                 }
                 moveByHead(snakeBody, key_pressed);
+=======
+            if(randomDirection == 1){
+                snake.moveByX(20);
+            }else{
+                snake.moveByY(20);
             }
-            if (snake.intersectWall()) {
-                canvas.closeWindow();
+           
+            // if(snake.intersectWall()){
+            // canvas.closeWindow();
+            // }
+            if(snake.intersectFood(canvas)){
+                food.removeFromCanvas(canvas);
+                food = new Food((int) (Math.random() * 1000), (int) (Math.random() * 800));
+                food.addToCanvas(canvas);
+>>>>>>> parent of 3e3352c (Update - 4/17)
             }
-            food_Lost_Spawn();
         });
+
         canvas.onKeyDown(event -> {
             if (event.getKey() == Key.RIGHT_ARROW) {
+<<<<<<< HEAD
                 key_pressed = 1;
 
             } else if (event.getKey() == Key.LEFT_ARROW) {
@@ -93,14 +113,38 @@ public class SnakeGame {
                 key_pressed = 3;
             } else if (event.getKey() == Key.DOWN_ARROW) {
                 key_pressed = 4;
+=======
+                snake.turnRight(100);
+            }
+            System.out.println(snake.intersectWall());
+        });
+
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.DOWN_ARROW) {
+                snake.turnDown(100);
             }
         });
+
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.LEFT_ARROW) {
+                snake.turnLeft(100);
+            }
+        });
+
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.UP_ARROW) {
+                snake.turnUp(100);
+>>>>>>> parent of 3e3352c (Update - 4/17)
+            }
+        });
+
     }
 
 
     private void createBackGround() {
-        snake = new Snake(200, 200);
+        snake = new Snake(100, 100);
         snake.addToCanvas(canvas);
+<<<<<<< HEAD
         snakeBody.add(snake);
         food = new Food(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
         food.addToCanvas(canvas);
@@ -120,8 +164,16 @@ public class SnakeGame {
         }
     }
 
+=======
+        food = new Food((int) (Math.random() * 1000), (int) (Math.random() * 800));
+        food.addToCanvas(canvas);
+    }
+
+>>>>>>> parent of 3e3352c (Update - 4/17)
     public static void main(String[] args) {
         new SnakeGame();
+
+
     }
 
     public void moveByHead(ArrayList<Snake> snakeBodies, int key_pressed) {
