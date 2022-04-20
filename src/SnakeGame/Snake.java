@@ -18,13 +18,6 @@ public class Snake extends Rectangle {
     double dX = 0.1;
     double dY = 0.1;
 
-<<<<<<< HEAD
-    private Snake child;
-    private int pastDirection;
-
-    // private Direction pastDirection;
-=======
->>>>>>> e7816f346165d45e5a2c8577b63e240cadd0d56e
 
     public Snake(double xPos, double yPos) {
         super(xPos, yPos, SNAKE_WIDTH, SNAKE_WIDTH);
@@ -63,8 +56,6 @@ public class Snake extends Rectangle {
 
     }
 
-<<<<<<< HEAD
-=======
     public void moveByY(double dt){
         centerY += dY * dt;
         this.setCenter(centerX, centerY);
@@ -75,7 +66,6 @@ public class Snake extends Rectangle {
         this.setCenter(centerX, centerY);
     }
 
->>>>>>> e7816f346165d45e5a2c8577b63e240cadd0d56e
     public boolean intersectWall() {
         if (centerY + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || centerY <= 0) {
             return true;
@@ -88,21 +78,6 @@ public class Snake extends Rectangle {
 
     public boolean intersectFood(CanvasWindow canvas) {
         Point centerPoint = this.getCenter();
-<<<<<<< HEAD
-        Point point1 = new Point(centerPoint.getX() + SNAKE_WIDTH / 2, centerPoint.getY());
-        Point point2 = new Point(centerPoint.getX() - SNAKE_WIDTH / 2, centerPoint.getY());
-        Point point3 = new Point(centerPoint.getX(), centerPoint.getY() - SNAKE_WIDTH / 2);
-        Point point4 = new Point(centerPoint.getX(), centerPoint.getY() + SNAKE_WIDTH / 2);
-
-        if (canvas.getElementAt(point1) != null
-            && canvas.getElementAt(point1).getClass() == Food.class) {
-
-            Snake snakeBody = new Snake(this.getCenter().getX() - this.getWidth(), this.getCenter().getY());
-            child = snakeBody;
-            child.addToCanvas(canvas);
-            snakeList.add(child);
-
-=======
         Point point1 = new Point(centerPoint.getX(), centerPoint.getY() - SNAKE_WIDTH/2);
         Point point2 = new Point(centerPoint.getX(), centerPoint.getY() + SNAKE_WIDTH/2);
         Point point3 = new Point(centerPoint.getX() + SNAKE_WIDTH/2, centerPoint.getY());
@@ -110,7 +85,6 @@ public class Snake extends Rectangle {
 
         if (canvas.getElementAt(point1) != null
             && canvas.getElementAt(point1).getClass() == Food.class) {  
->>>>>>> e7816f346165d45e5a2c8577b63e240cadd0d56e
             return true;
         } else if (canvas.getElementAt(point2) != null
             && canvas.getElementAt(point2).getClass() == Food.class) {
@@ -148,70 +122,7 @@ public class Snake extends Rectangle {
         canvas.add(this);
     }
 
-<<<<<<< HEAD
-    public void turnLeft(double dt) {
-        xPos -= dX * dt;
-        this.setCenter(xPos, yPos);
-    }
-
-
-    public void turnRight(double dt) {
-        xPos += dX * dt;
-        this.setCenter(xPos, yPos);
-
-    }
-
-    public void turnUp(double dt) {
-        yPos -= dY * dt;
-        this.setCenter(xPos, yPos);
-
-    }
-
-
-    public void turnDown(double dt) {
-        yPos += dY * dt;
-        this.setCenter(xPos, yPos);
-    }
-
-    public void move(int direction, int size) {
-        direction = pastDirection;
-        int dt = 20;
-        if (direction == 1) {
-            snakeList.get(size).turnRight(dt);
-
-            if ((size + 1) < snakeList.size()) {
-                move(pastDirection, size + 1);
-            }
-
-
-        } else if (pastDirection == 2) {
-            snakeList.get(size).turnLeft(dt);
-
-            if ((size + 1) < snakeList.size()) {
-                move(pastDirection, size + 1);
-            }
-
-        } else if (pastDirection == 3) {
-            snakeList.get(size).turnUp(dt);
-
-            if ((size + 1) < snakeList.size()) {
-                move(pastDirection, size + 1);
-            }
-
-        } else if (direction == 4) {
-            snakeList.get(size).turnDown(dt);
-
-            if ((size + 1) < snakeList.size()) {
-                move(direction, size + 1);
-            }
-
-        }
-        ;
-
-    }
-=======
  
->>>>>>> e7816f346165d45e5a2c8577b63e240cadd0d56e
 
 
     // public void move(int direction, Snake child) {
