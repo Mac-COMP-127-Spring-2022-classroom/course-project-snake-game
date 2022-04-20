@@ -14,6 +14,7 @@ public class Snake extends Rectangle {
 
     private double centerX;
     private double centerY;
+    public static Snake child;
 
     double dX = 0.1;
     double dY = 0.1;

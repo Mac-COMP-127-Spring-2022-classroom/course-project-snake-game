@@ -2,6 +2,8 @@
 package SnakeGame;
 
 
+import java.util.ArrayList;
+
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
@@ -17,6 +19,7 @@ public class SnakeGame {
     private Snake snake;
     private Food food;
     private double dt = 20;
+    private int key_pressed;
 
 
     public SnakeGame() {
@@ -74,7 +77,10 @@ public class SnakeGame {
                 food = new Food((int) (Math.random() * 1000), (int) (Math.random() * 800));
                 food.addToCanvas(canvas);
             }
-        });
+        }});
+    
+
+        
 
         canvas.onKeyDown(event -> {
             if (event.getKey() == Key.RIGHT_ARROW) {
@@ -124,7 +130,6 @@ public class SnakeGame {
             food = new Food(xPos, yPos);
             food.addToCanvas(canvas);
         }
-    }
 
         food = new Food((int) (Math.random() * 1000), (int) (Math.random() * 800));
         food.addToCanvas(canvas);
