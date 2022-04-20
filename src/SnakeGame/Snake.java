@@ -20,15 +20,14 @@ public class Snake extends Rectangle {
     // Speed is 0.1
     double dX = 0.1;
     double dY = 0.1;
-     
+
+
     public Snake(double xPos, double yPos) {
-        super(0, 0, SNAKE_WIDTH, SNAKE_WIDTH);
-        this.setCenter(xPos,yPos);
-        this.xPos = xPos;
-        this.yPos = yPos;
+        super(xPos, yPos, SNAKE_WIDTH, SNAKE_WIDTH);
         this.setFillColor(Color.RED);
         snakeList = new ArrayList<>();
         snakeList.add(this);
+    }
 
     public void setPastDirection(int pastDirection) {
         this.pastDirection = pastDirection;
@@ -57,29 +56,29 @@ public class Snake extends Rectangle {
         }
     }
     public void turnLeft(double dt) {
-        xPos -= dX * dt;
-        this.setCenter(xPos, yPos);
+        centerX -= dX * dt;
+        this.setCenter(centerX, centerY);
 
 
     }
 
     public void turnRight(double dt) {
-        xPos += dX * dt;
-        this.setCenter(xPos, yPos);
+        centerX += dX * dt;
+        this.setCenter(centerX, centerY);
 
 
     }
 
     public void turnUp(double dt) {
-        yPos -= dY * dt;
-        this.setCenter(xPos, yPos);
+        centerY -= dY * dt;
+        this.setCenter(centerX, centerY);
 
 
     }
 
     public void turnDown(double dt) {
-        yPos += dY * dt;
-        this.setCenter(xPos, yPos);
+        centerY += dY * dt;
+        this.setCenter(centerX, centerY);
 
 
     }
@@ -87,10 +86,10 @@ public class Snake extends Rectangle {
     
 
     public boolean intersectWall() {
-        if (yPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || yPos <= 0) {
+        if (centerY + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || centerY <= 0) {
             return true;
         }
-        if (xPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || xPos <= 0) {
+        if (centerX + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || centerX <= 0) {
             return true;
         }
         return false;

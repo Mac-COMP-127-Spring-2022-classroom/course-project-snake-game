@@ -95,16 +95,16 @@ public class SnakeGame {
         food = new Food(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
         food.addToCanvas(canvas);
 
-        Rectangle sky = new Rectangle(0, 0, canvas.getWidth(), canvas.getHeight());
-        sky.setFillColor(SKY_COLOR);
-        sky.setFilled(true);
-        canvas.add(sky);
+        // Rectangle sky = new Rectangle(0, 0, canvas.getWidth(), canvas.getHeight());
+        // sky.setFillColor(SKY_COLOR);
+        // sky.setFilled(true);
+        // canvas.add(sky);
 
-        Rectangle ground = new Rectangle(0, canvas.getHeight() - WINDOW_PADDING, canvas.getWidth(), WINDOW_PADDING);
-        ground.setFilled(true);
-        ground.setFillColor(GROUND_COLOR);
-        ground.setStroked(false);
-        canvas.add(ground);
+        // Rectangle ground = new Rectangle(0, canvas.getHeight() - WINDOW_PADDING, canvas.getWidth(), WINDOW_PADDING);
+        // ground.setFilled(true);
+        // ground.setFillColor(GROUND_COLOR);
+        // ground.setStroked(false);
+        // canvas.add(ground);
     }
 
     /**
@@ -175,7 +175,7 @@ public class SnakeGame {
 
     private void snakeSegmentMovement() {
         for (Snake item:snakeBody) {
-            item.movement(dt);abv
+            item.movement(dt);
             
         }
     }
