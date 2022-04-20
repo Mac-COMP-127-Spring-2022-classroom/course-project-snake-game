@@ -3,9 +3,6 @@ package SnakeGame;
 
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.plaf.synth.SynthLabelUI;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
@@ -13,22 +10,16 @@ import edu.macalester.graphics.events.Key;
 public class SnakeGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 800;
-    public static CanvasWindow canvas;
-
-  
-    // private static Array
+    public static CanvasWindow canvas;  
     private ArrayList<Snake> snakeBody;
 
-
-    private Snake snake;
     private Food food;
-    private int key_pressed, bodyCount;
     private double dt = 20;
+    private int key_pressed;
 
 
     public SnakeGame() {
         canvas = new CanvasWindow("Snake Game", CANVAS_WIDTH, CANVAS_HEIGHT);
-        snakeBody = new ArrayList<Snake>();
         createBackGround();
         startGame();
 
@@ -37,16 +28,76 @@ public class SnakeGame {
 
     public void startGame() {
         canvas.animate(() -> {
-            snake.setPastDirection(snake.getDirection());
-            snake.setDirection(key_pressed);
-            // Snake segment movement
-            for (int i=0; i<bodyCount; i++) {
-                snakeBody.get(i+1).setDirection(snakeBody.get(i).getPastDirection());
+
+            if (key_pressed == 1) {
+                snake.turnRight(dt);
+                if (snake.intersectFood(canvas)) {
+                    addBody(snake.getX() - snake.getWidth(), snake.getY(), canvas);
+                }
+                moveByHead(snakeBody, key_pressed);
+            } else if (key_pressed == 2) {
+                snake.turnLeft(dt);
+                if (snake.intersectFood(canvas)) {
+                    
+
+                }
+                moveByHead(snakeBody, key_pressed);
+            } else if (key_pressed == 3) {
+                snake.turnUp(dt);
+                if (snake.intersectFood(canvas)) {
+                   
+
+                }
+                moveByHead(snakeBody, key_pressed);
+            } else if (key_pressed == 4) {
+                snake.turnDown(dt);
+                if (snake.intersectFood(canvas)) {
+                    addBody(snake.getX(), snake.getY() - snake.getWidth() , canvas);
+
+                }
+                moveByHead(snakeBody, key_pressed);
+
+                if(randomDirection == 1){
+                snake.moveByX(20);
+            }else{
+                snake.moveByY(20);
             }
-            snakeSegmentMovement();
-            // Close window if hit the wall
-            if (snake.intersectWall()) {
-                canvas.closeWindow();
+           
+            // if(snake.intersectWall()){
+            // canvas.closeWindow();
+            // }
+            if(snake.intersectFood(canvas)){
+                food.removeFromCanvas(canvas);
+                food = new Food((int) (Math.random() * 1000), (int) (Math.random() * 800));
+                food.addToCanvas(canvas);
+            }
+        }});
+    
+
+        
+
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.RIGHT_ARROW) {
+                snake.turnRight(100);
+            }
+            System.out.println(snake.intersectWall());
+        });
+
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.DOWN_ARROW) {
+                snake.turnDown(100);
+            }
+        });
+
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.LEFT_ARROW) {
+                snake.turnLeft(100);
+            }
+        });
+
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.UP_ARROW) {
+                snake.turnUp(100);
             }
             // Transitions as food is eaten
             food_Lost_Spawn();
@@ -78,6 +129,14 @@ public class SnakeGame {
             double yPos = Math.floor(Math.random() * (CANVAS_HEIGHT * 4 / 5 - 100 + 1) + 100);
             food = new Food(xPos, yPos);
             food.addToCanvas(canvas);
+        }
+
+        food = new Food((int) (Math.random() * 1000), (int) (Math.random() * 800));
+        food.addToCanvas(canvas);
+    }
+
+    public static void main(String[] args) {
+        new SnakeGame();
 
             // Lengthen the snake
             Snake lastBody = snakeBody.get(bodyCount);

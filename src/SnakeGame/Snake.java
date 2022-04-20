@@ -7,11 +7,13 @@ import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
 public class Snake extends Rectangle {
+    ArrayList<Snake> snakeList = new ArrayList<>();
 
     public static double SNAKE_WIDTH = 30;
 
-    private double xPos;
-    private double yPos;
+    private double centerX;
+    private double centerY;
+    public static Snake child;
 
     private int direction, pastDirection;
 
@@ -25,21 +27,8 @@ public class Snake extends Rectangle {
         this.xPos = xPos;
         this.yPos = yPos;
         this.setFillColor(Color.RED);
-        this.pastDirection = 0;
-        this.direction = 0;
-    }
-
-    public double getCenterX() {
-        return this.getCenter().getX();
-    }
-
-    public double getCenterY() {
-        return this.getCenter().getY();
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
+        snakeList = new ArrayList<>();
+        snakeList.add(this);
 
     public void setPastDirection(int pastDirection) {
         this.pastDirection = pastDirection;
@@ -119,12 +108,30 @@ public class Snake extends Rectangle {
             return true;
         } else if (canvas.getElementAt(point2) != null
             && canvas.getElementAt(point2).getClass() == Food.class) {
+
+            Snake snakeBody = new Snake(this.getCenter().getX() + this.getWidth(), this.getCenter().getY());
+            child = snakeBody;
+            child.addToCanvas(canvas);
+            snakeList.add(child);
+
             return true;
         } else if (canvas.getElementAt(point3) != null
             && canvas.getElementAt(point3).getClass() == Food.class) {
+
+            Snake snakeBody = new Snake(this.getCenter().getX(), this.getCenter().getY() + this.getWidth());
+            child = snakeBody;
+            child.addToCanvas(canvas);
+            snakeList.add(child);
+
             return true;
         } else if (canvas.getElementAt(point4) != null
             && canvas.getElementAt(point4).getClass() == Food.class) {
+
+            Snake snakeBody = new Snake(this.getCenter().getX(), this.getCenter().getY() - this.getWidth());
+            child = snakeBody;
+            child.addToCanvas(canvas);
+            snakeList.add(child);
+
             return true;
         }
         return false;
@@ -136,6 +143,36 @@ public class Snake extends Rectangle {
     }
 
  
+
+
+    // public void move(int direction, Snake child) {
+    // pastDirection = direction;
+    // if (direction == 1) {
+    // child.turnRight(dt);
+    // if (child != null) {
+    // move(pastDirection, child);
+    // }
+    // } else if (direction == 2) {
+    // child.turnLeft(dt);
+    // // if (child != null) {
+    // // child = child;
+    // // move(pastDirection, child);
+    // // }
+    // } else if (direction == 3) {
+    // child.turnUp(dt);
+    // // if (child != null) {
+    // // child = child;
+    // // move(pastDirection, child);
+    // // }
+    // } else if (direction == 4) {
+    // child.turnDown(dt);
+    // // if (child != null) {
+    // // child = snake;
+    // // move(pastDirection, child);
+    // // }
+    // }
+    // this.pastDirection = direction;
+    // }
 
 
 }
