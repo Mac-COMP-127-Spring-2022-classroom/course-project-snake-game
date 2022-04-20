@@ -175,7 +175,7 @@ public class SnakeGame {
 
     private void snakeSegmentMovement() {
         for (Snake item:snakeBody) {
-            item.movement(dt);
+            item.movement(dt);abv
             
         }
     }
