@@ -1,7 +1,6 @@
 package SnakeGame;
 
 import java.awt.Color;
-import java.util.ArrayList;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Point;
@@ -11,63 +10,98 @@ public class Snake extends Rectangle {
 
     public static double SNAKE_WIDTH = 30;
 
-    private double centerX;
-    private double centerY;
+    private double xPos;
+    private double yPos;
 
+    private int direction, pastDirection;
+
+    // Speed is 0.1
     double dX = 0.1;
     double dY = 0.1;
-
-
+     
     public Snake(double xPos, double yPos) {
-        super(xPos, yPos, SNAKE_WIDTH, SNAKE_WIDTH);
+        super(0, 0, SNAKE_WIDTH, SNAKE_WIDTH);
+        this.setCenter(xPos,yPos);
+        this.xPos = xPos;
+        this.yPos = yPos;
         this.setFillColor(Color.RED);
-
-
+        this.pastDirection = 0;
+        this.direction = 0;
     }
 
+    public double getCenterX() {
+        return this.getCenter().getX();
+    }
+
+    public double getCenterY() {
+        return this.getCenter().getY();
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public void setPastDirection(int pastDirection) {
+        this.pastDirection = pastDirection;
+    }
+    public int getDirection() {
+        return this.direction;
+    }
+
+    public int getPastDirection() {
+        return this.pastDirection;
+    }
+
+    // Snake movement by int direction
+    public void movement(double dt) {
+        if (this.direction == 1) {
+            this.turnRight(dt);
+        }
+        else if (this.direction == 2) {
+            this.turnLeft(dt);
+        }
+        else if (this.direction ==3) {
+            this.turnUp(dt);
+        }
+        else if (this.direction==4) {
+            this.turnDown(dt);
+        }
+    }
     public void turnLeft(double dt) {
-        centerX -= dX * dt;
-        this.setCenter(centerX, centerY);
+        xPos -= dX * dt;
+        this.setCenter(xPos, yPos);
 
 
     }
 
     public void turnRight(double dt) {
-        centerX += dX * dt;
-        this.setCenter(centerX, centerY);
+        xPos += dX * dt;
+        this.setCenter(xPos, yPos);
 
 
     }
 
     public void turnUp(double dt) {
-        centerY -= dY * dt;
-        this.setCenter(centerX, centerY);
+        yPos -= dY * dt;
+        this.setCenter(xPos, yPos);
 
 
     }
 
     public void turnDown(double dt) {
-        centerY += dY * dt;
-        this.setCenter(centerX, centerY);
+        yPos += dY * dt;
+        this.setCenter(xPos, yPos);
 
 
     }
 
-    public void moveByY(double dt){
-        centerY += dY * dt;
-        this.setCenter(centerX, centerY);
-    }
-
-    public void moveByX(double dt){
-        centerX += dX * dt;
-        this.setCenter(centerX, centerY);
-    }
+    
 
     public boolean intersectWall() {
-        if (centerY + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || centerY <= 0) {
+        if (yPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_HEIGHT || yPos <= 0) {
             return true;
         }
-        if (centerX + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || centerX <= 0) {
+        if (xPos + (SNAKE_WIDTH / 2) >= SnakeGame.CANVAS_WIDTH || xPos <= 0) {
             return true;
         }
         return false;
