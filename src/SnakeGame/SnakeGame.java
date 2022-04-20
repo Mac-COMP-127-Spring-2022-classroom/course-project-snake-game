@@ -17,6 +17,9 @@ public class SnakeGame {
     private double dt = 20;
     private int key_pressed;
 
+    private Snake snake;
+    private int bodyCount;
+
 
     public SnakeGame() {
         canvas = new CanvasWindow("Snake Game", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -31,36 +34,12 @@ public class SnakeGame {
 
             if (key_pressed == 1) {
                 snake.turnRight(dt);
-                if (snake.intersectFood(canvas)) {
-                    addBody(snake.getX() - snake.getWidth(), snake.getY(), canvas);
-                }
-                moveByHead(snakeBody, key_pressed);
             } else if (key_pressed == 2) {
                 snake.turnLeft(dt);
-                if (snake.intersectFood(canvas)) {
-                    
-
-                }
-                moveByHead(snakeBody, key_pressed);
             } else if (key_pressed == 3) {
                 snake.turnUp(dt);
-                if (snake.intersectFood(canvas)) {
-                   
-
-                }
-                moveByHead(snakeBody, key_pressed);
             } else if (key_pressed == 4) {
                 snake.turnDown(dt);
-                if (snake.intersectFood(canvas)) {
-                    addBody(snake.getX(), snake.getY() - snake.getWidth() , canvas);
-
-                }
-                moveByHead(snakeBody, key_pressed);
-
-                if(randomDirection == 1){
-                snake.moveByX(20);
-            }else{
-                snake.moveByY(20);
             }
            
             // if(snake.intersectWall()){
@@ -71,7 +50,7 @@ public class SnakeGame {
                 food = new Food((int) (Math.random() * 1000), (int) (Math.random() * 800));
                 food.addToCanvas(canvas);
             }
-        }});
+        });
     
 
         
