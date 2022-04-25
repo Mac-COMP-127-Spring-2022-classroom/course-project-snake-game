@@ -6,8 +6,10 @@ import java.util.Random;
     
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
+import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Line;
+import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
 /**
@@ -18,6 +20,7 @@ public class snakeGame {
     // CANVAS SCREEN SIZE AND AN UNIT GRID SIZE
     public static final int SCREEN_HEIGHT = 600;
     public static final int SCREEN_WIDTH = 600;
+    public static final int SCORE_PANEL_WIDTH = 200;
     public static final int UNIT_SIZE = 25;
 
     // Direction variable of the snake heading
@@ -27,6 +30,8 @@ public class snakeGame {
     private static Food food = new Food(0, 0);
     private static Snake snakeHead;
     private static int snakeBodyCount = 1;
+    private static Integer foodEaten =0;
+    private static GraphicsText scoreValText;
     private static ArrayList<Snake> snakeBody = new ArrayList<>();
     public static CanvasWindow canvas;
 
@@ -44,21 +49,48 @@ public class snakeGame {
      * Set Background with gridlines
      */
     private static void setBackground() {
-        canvas = new CanvasWindow("Snake Game", SCREEN_WIDTH, SCREEN_HEIGHT);
+        canvas = new CanvasWindow("Snake Game", SCREEN_WIDTH + SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
         canvas.setBackground(Color.DARK_GRAY);
 
-        for (int i = 0; i < SCREEN_WIDTH / UNIT_SIZE; i += 1) {
+        for (int i = 0; i <= SCREEN_WIDTH / UNIT_SIZE; i += 1) {
             Line line = new Line(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
             line.setStrokeWidth(0.5);
             canvas.add(line);
         }
-        for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i += 1) {
+        for (int i = 0; i <= SCREEN_HEIGHT / UNIT_SIZE; i += 1) {
             Line line = new Line(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             line.setStrokeWidth(0.5);
             canvas.add(line);
         }
+        addScorePanel();
     }
 
+    /**
+     * Score Panel for the game
+     * Consists of rectangles and textboxes
+     */
+
+    private static void addScorePanel() {
+        // Score Panel is the overall interface on the rightside
+        // scoreText just contains the word "YOUR SCORE". 
+        // scoreValText is the text displaying the value (how many foods was eaten)
+        GraphicsGroup scorePanel = new GraphicsGroup(SCREEN_WIDTH, 0);
+        Rectangle panel = new Rectangle(0, 0, SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
+        panel.setFillColor(Color.LIGHT_GRAY);
+        GraphicsText scoreText = new GraphicsText("YOUR SCORE:", 0, 0);
+        scoreValText = new GraphicsText("0", 0, 0);
+        scorePanel.add(panel);
+        scorePanel.add(scoreText);
+        scorePanel.add(scoreValText);
+
+        scoreText.setFont(FontStyle.BOLD, 20);
+        scoreText.setCenter(SCORE_PANEL_WIDTH/2, SCREEN_HEIGHT * 1/4);
+        scoreValText.setFont(FontStyle.PLAIN, 40);
+        scoreValText.setFillColor(Color.GRAY);
+        scoreValText.setCenter(SCORE_PANEL_WIDTH/2, SCREEN_HEIGHT * 1/3);
+        
+        canvas.add(scorePanel);
+    } 
     /**
      * Place food and snake head initially
      */
@@ -192,11 +224,14 @@ public class snakeGame {
                     snakeHead.setPosition(oldX - UNIT_SIZE, oldY);
                     break;
             }
-            // if snake eats food then spawn new food. Also sprout a new body segment
+            // if snake eats food then spawn new food. 
+            // Relocate food to a random position. Sprout a new body segment. Update the text for score value
             if (snakeHead.getPosition().getX() == food.getPosition().getX()
                 && snakeHead.getPosition().getY() == food.getPosition().getY()) {
+                foodEaten+=1;
                 spawnFood();
                 sproutBodySegment();
+                scoreValText.setText(foodEaten.toString());
             }
         });
     }
