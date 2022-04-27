@@ -3,7 +3,8 @@ package snakeGameFolder;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
-    
+
+
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsGroup;
@@ -11,16 +12,18 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Line;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
+import edu.macalester.graphics.ui.Button;
 
 /**
  * Snake Game presented
  * @author: Long Truong (with Tri and Thu)
  */
-public class snakeGame {
+public class SnakeGame {
     // CANVAS SCREEN SIZE AND AN UNIT GRID SIZE
     public static final int SCREEN_HEIGHT = 600;
     public static final int SCREEN_WIDTH = 600;
     public static final int SCORE_PANEL_WIDTH = 200;
+    public static final int TOTAL_PROGRAM_WIDTH = SCORE_PANEL_WIDTH + SCREEN_WIDTH;
     public static final int UNIT_SIZE = 25;
 
     // Direction variable of the snake heading
@@ -39,10 +42,37 @@ public class snakeGame {
      * Main method
      */
     public static void main(String[] args) {
+        openMenu();
+    }
+    
+    /**
+     * Load the game after the play button is hit
+    */
+    public static void gameDisplayed() {
         setBackground();
         objectsPlaced();
         giveOutDirection();
         gameAnimate();
+    }
+
+    /** Open menu with button */
+    public static void openMenu() {
+        canvas = new CanvasWindow("Snake Game",SCREEN_WIDTH+ SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
+        GraphicsText gameTitle = new GraphicsText("SNAKE GAME");
+        GraphicsText author = new GraphicsText("Presented by Long, Tri, and Thu");
+        Button playButton = new Button("Play Game");
+        Button quitButton = new Button("Quit Game");
+        canvas.add(gameTitle);
+        canvas.add(author);
+        canvas.add(playButton, 200, 200);
+        canvas.add(quitButton,200,300);
+        gameTitle.setCenter(TOTAL_PROGRAM_WIDTH/2, SCREEN_HEIGHT /8  );
+        author.setCenter(TOTAL_PROGRAM_WIDTH/2, SCREEN_HEIGHT/8 + SCREEN_HEIGHT/20);
+        playButton.setCenter(TOTAL_PROGRAM_WIDTH/2, SCREEN_HEIGHT/2);
+        quitButton.setCenter(TOTAL_PROGRAM_WIDTH/2, SCREEN_HEIGHT/2 + SCREEN_HEIGHT/12);
+        canvas.draw();
+        quitButton.onClick(() -> canvas.closeWindow());
+        playButton.onClick(() -> gameDisplayed());
     }
 
     /**
@@ -50,7 +80,7 @@ public class snakeGame {
      */
     private static void setBackground() {
         canvas = new CanvasWindow("Snake Game", SCREEN_WIDTH + SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
-        canvas.setBackground(Color.DARK_GRAY);
+        canvas.setBackground(Color.gray);
 
         for (int i = 0; i <= SCREEN_WIDTH / UNIT_SIZE; i += 1) {
             Line line = new Line(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
@@ -69,7 +99,6 @@ public class snakeGame {
      * Score Panel for the game
      * Consists of rectangles and textboxes
      */
-
     private static void addScorePanel() {
         // Score Panel is the overall interface on the rightside
         // scoreText just contains the word "YOUR SCORE". 
@@ -91,12 +120,13 @@ public class snakeGame {
         
         canvas.add(scorePanel);
     } 
+    
     /**
      * Place food and snake head initially
      */
     private static void objectsPlaced() {
         snakeHead = new Snake(250, 250);
-        snakeHead.setStrokeColor(new Color(25, 51, 0));
+        // snakeHead.setStrokeColor(new Color(25, 51, 0));
         snakeHead.setFillColor(new Color(25, 51, 0));
         snakeBody.add(snakeHead);
         food = new Food(0, 0);
@@ -110,16 +140,16 @@ public class snakeGame {
      */
     private static void giveOutDirection() {
         canvas.onKeyDown(event -> {
-            if (event.getKey() == Key.RIGHT_ARROW) {
+            if (event.getKey() == Key.RIGHT_ARROW && direction != 'L') {
                 direction = 'R';
             }
-            if (event.getKey() == Key.LEFT_ARROW) {
+            if (event.getKey() == Key.LEFT_ARROW && direction != 'R') {
                 direction = 'L';
             }
-            if (event.getKey() == Key.UP_ARROW) {
+            if (event.getKey() == Key.UP_ARROW && direction != 'D') {
                 direction = 'U';
             }
-            if (event.getKey() == Key.DOWN_ARROW) {
+            if (event.getKey() == Key.DOWN_ARROW && direction != 'U') {
                 direction = 'D';
             }
         });

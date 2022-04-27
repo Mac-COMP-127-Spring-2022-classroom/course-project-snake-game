@@ -5,8 +5,8 @@ import edu.macalester.graphics.Rectangle;
 
 public class Food extends Ellipse{
     public Food(int xPos, int yPos) {
-        super(xPos, yPos, snakeGame.UNIT_SIZE, snakeGame.UNIT_SIZE);
+        super(xPos, yPos, SnakeGame.UNIT_SIZE, SnakeGame.UNIT_SIZE);
         this.setFillColor(Color.RED);
-        this.setStrokeColor(Color.RED);
+        this.setStrokeWidth(2);
     }
 }
