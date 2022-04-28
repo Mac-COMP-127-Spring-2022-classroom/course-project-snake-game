@@ -1,7 +1,7 @@
 package snakeGameFolder;
 import java.awt.Color;
 import edu.macalester.graphics.Ellipse;
-import edu.macalester.graphics.Rectangle;
+
 
 public class Food extends Ellipse{
     public Food(int xPos, int yPos) {

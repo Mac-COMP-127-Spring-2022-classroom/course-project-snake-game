@@ -16,7 +16,7 @@ import edu.macalester.graphics.ui.Button;
 
 /**
  * Snake Game presented
- * @author: Long Truong (with Tri and Thu)
+ * @author: Long Truong, Tri and Thu
  */
 public class SnakeGame {
     // CANVAS SCREEN SIZE AND AN UNIT GRID SIZE
@@ -48,7 +48,7 @@ public class SnakeGame {
     /**
      * Load the game after the play button is hit
     */
-    public static void gameDisplayed() {
+    public static void playGame() {
         setBackground();
         objectsPlaced();
         giveOutDirection();
