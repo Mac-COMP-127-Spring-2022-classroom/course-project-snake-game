@@ -16,6 +16,7 @@ import edu.macalester.graphics.ui.Button;
 
 /**
  * Snake Game presented
+ * 
  * @author: Long Truong, Tri and Thu
  */
 public class SnakeGame {
@@ -33,10 +34,11 @@ public class SnakeGame {
     private static Food food = new Food(0, 0);
     private static Snake snakeHead;
     private static int snakeBodyCount = 1;
-    private static Integer foodEaten =0;
+    private static Integer foodEaten = 0;
     private static GraphicsText scoreValText;
     private static ArrayList<Snake> snakeBody = new ArrayList<>();
     public static CanvasWindow canvas;
+    public static boolean lose;
 
     /**
      * Main method
@@ -44,20 +46,24 @@ public class SnakeGame {
     public static void main(String[] args) {
         openMenu();
     }
-    
+
     /**
      * Load the game after the play button is hit
-    */
+     */
     public static void playGame() {
-        setBackground();
-        objectsPlaced();
-        giveOutDirection();
-        gameAnimate();
+        if (!lose) {
+            setBackground();
+            objectsPlaced();
+            giveOutDirection();
+            gameAnimate();
+        } else {
+            loseGame();
+        }
     }
 
     /** Open menu with button */
     public static void openMenu() {
-        canvas = new CanvasWindow("Snake Game",SCREEN_WIDTH+ SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
+        canvas = new CanvasWindow("Snake Game", SCREEN_WIDTH + SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
         GraphicsText gameTitle = new GraphicsText("SNAKE GAME");
         GraphicsText author = new GraphicsText("Presented by Long, Tri, and Thu");
         Button playButton = new Button("Play Game");
@@ -65,20 +71,21 @@ public class SnakeGame {
         canvas.add(gameTitle);
         canvas.add(author);
         canvas.add(playButton, 200, 200);
-        canvas.add(quitButton,200,300);
-        gameTitle.setCenter(TOTAL_PROGRAM_WIDTH/2, SCREEN_HEIGHT /8  );
-        author.setCenter(TOTAL_PROGRAM_WIDTH/2, SCREEN_HEIGHT/8 + SCREEN_HEIGHT/20);
-        playButton.setCenter(TOTAL_PROGRAM_WIDTH/2, SCREEN_HEIGHT/2);
-        quitButton.setCenter(TOTAL_PROGRAM_WIDTH/2, SCREEN_HEIGHT/2 + SCREEN_HEIGHT/12);
+        canvas.add(quitButton, 200, 300);
+        gameTitle.setCenter(TOTAL_PROGRAM_WIDTH / 2, SCREEN_HEIGHT / 8);
+        author.setCenter(TOTAL_PROGRAM_WIDTH / 2, SCREEN_HEIGHT / 8 + SCREEN_HEIGHT / 20);
+        playButton.setCenter(TOTAL_PROGRAM_WIDTH / 2, SCREEN_HEIGHT / 2);
+        quitButton.setCenter(TOTAL_PROGRAM_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 12);
         canvas.draw();
         quitButton.onClick(() -> canvas.closeWindow());
-        playButton.onClick(() -> gameDisplayed());
+        playButton.onClick(() -> playGame());
     }
 
     /**
      * Set Background with gridlines
      */
     private static void setBackground() {
+        canvas.removeAll();
         canvas = new CanvasWindow("Snake Game", SCREEN_WIDTH + SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
         canvas.setBackground(Color.gray);
 
@@ -96,12 +103,11 @@ public class SnakeGame {
     }
 
     /**
-     * Score Panel for the game
-     * Consists of rectangles and textboxes
+     * Score Panel for the game Consists of rectangles and textboxes
      */
     private static void addScorePanel() {
         // Score Panel is the overall interface on the rightside
-        // scoreText just contains the word "YOUR SCORE". 
+        // scoreText just contains the word "YOUR SCORE".
         // scoreValText is the text displaying the value (how many foods was eaten)
         GraphicsGroup scorePanel = new GraphicsGroup(SCREEN_WIDTH, 0);
         Rectangle panel = new Rectangle(0, 0, SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
@@ -113,14 +119,14 @@ public class SnakeGame {
         scorePanel.add(scoreValText);
 
         scoreText.setFont(FontStyle.BOLD, 20);
-        scoreText.setCenter(SCORE_PANEL_WIDTH/2, SCREEN_HEIGHT * 1/4);
+        scoreText.setCenter(SCORE_PANEL_WIDTH / 2, SCREEN_HEIGHT * 1 / 4);
         scoreValText.setFont(FontStyle.PLAIN, 40);
         scoreValText.setFillColor(Color.GRAY);
-        scoreValText.setCenter(SCORE_PANEL_WIDTH/2, SCREEN_HEIGHT * 1/3);
-        
+        scoreValText.setCenter(SCORE_PANEL_WIDTH / 2, SCREEN_HEIGHT * 1 / 3);
+
         canvas.add(scorePanel);
-    } 
-    
+    }
+
     /**
      * Place food and snake head initially
      */
@@ -191,44 +197,50 @@ public class SnakeGame {
 
     /**
      * Check if the snake hits the wall
+     * 
      * @return true if the snake hits the wall, false if not
      */
     private static boolean checkWallCollision() {
-        if (snakeHead.getPosition().getX() >= SCREEN_WIDTH || 
-            snakeHead.getPosition().getX() < 0 || 
-            snakeHead.getPosition().getY() >= SCREEN_HEIGHT || 
-            snakeHead.getPosition().getY() <0) {
-                return true;
-            } 
-        else { return false; }
+        if (snakeHead.getPosition().getX() >= SCREEN_WIDTH ||
+            snakeHead.getPosition().getX() < 0 ||
+            snakeHead.getPosition().getY() >= SCREEN_HEIGHT ||
+            snakeHead.getPosition().getY() < 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
      * Check if the snake hits its own body segment
+     * 
      * @return true if it hits, false if not
      */
     private static boolean checkBodyCollision() {
-        for (int i=1; i<snakeBodyCount;i++) {
-            // Notice that snakeSegment.getPosition() == snakeSegment.getPosition() does not work so I have to do
+        for (int i = 1; i < snakeBodyCount; i++) {
+            // Notice that snakeSegment.getPosition() == snakeSegment.getPosition() does not work so I have to
+            // do
             // it the longer way
             if (snakeBody.get(i).getPosition().getX() == snakeHead.getPosition().getX() &&
                 snakeBody.get(i).getPosition().getY() == snakeHead.getPosition().getY()) {
-                    return true;
+                return true;
             }
         }
         return false;
     }
 
     /**
-     * Animate the snake movement scene. Calls spawnFood(), giveOutDirection(), and sproutBodySegment() to work.
-     * If the player loses. Close the Canvas Window
-     * Main-role function
+     * Animate the snake movement scene. Calls spawnFood(), giveOutDirection(), and sproutBodySegment()
+     * to work. If the player loses. Close the Canvas Window Main-role function
      */
     private static void gameAnimate() {
         canvas.animate(() -> {
-            // Check if player loses 
+            // Check if player loses
             if (checkWallCollision() || checkBodyCollision()) {
-                canvas.closeWindow();
+                lose = true;
+                loseGame();
+
+                // canvas.closeWindow();
             }
             // Update snakeBody segment position
             int oldX = (int) snakeHead.getPosition().getX();
@@ -254,11 +266,11 @@ public class SnakeGame {
                     snakeHead.setPosition(oldX - UNIT_SIZE, oldY);
                     break;
             }
-            // if snake eats food then spawn new food. 
+            // if snake eats food then spawn new food.
             // Relocate food to a random position. Sprout a new body segment. Update the text for score value
             if (snakeHead.getPosition().getX() == food.getPosition().getX()
                 && snakeHead.getPosition().getY() == food.getPosition().getY()) {
-                foodEaten+=1;
+                foodEaten += 1;
                 spawnFood();
                 sproutBodySegment();
                 scoreValText.setText(foodEaten.toString());
@@ -268,6 +280,7 @@ public class SnakeGame {
 
     /**
      * A delay between animation time
+     * 
      * @param ms Time input measured in ms
      */
     public static void wait(int ms) {
@@ -279,14 +292,20 @@ public class SnakeGame {
     }
 
     /**
-     * Losing scene 
+     * Losing scene
      */
-    private static void playerLost() {
-        CanvasWindow canvasLose = new CanvasWindow("YOU LOSE", SCREEN_WIDTH, SCREEN_HEIGHT);
-        GraphicsText loseText = new GraphicsText("YOU LOSE", 200, 200);
-        loseText.setFont(FontStyle.BOLD, 200);
-        canvasLose.add(loseText);
-        
+    private static void loseGame() {
+        Button playAgain = new Button("Play Again");
+        Button quitButton = new Button("Quit");
+       
+        canvas.add(playAgain, 250, 250);
+        canvas.add(quitButton, 265, 300);
+        canvas.draw();
+        quitButton.onClick(() -> canvas.closeWindow());
+        playAgain.onClick(() -> {
+            lose = false;
+            playGame();
+        });
     }
 }
 
