@@ -7,7 +7,6 @@ The main functionality of the game is to guide the snake to eat the food on the 
 More advanced functionality that we would love to include are: 1. increase the speed of the snake as the snake gets longer, 2. increase the amount of food on the game board, 3. add the music, and so on. 
 
 We have done some research on the internet, and have been inspired by various sources available on the Internet: 
-- The UML diagram for Snake Game
 
 A. UML Diagram and Reddit discussion:
 
