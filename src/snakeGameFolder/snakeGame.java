@@ -17,7 +17,7 @@ import edu.macalester.graphics.ui.Button;
 /**
  * Snake Game presented
  * 
- * @author: Long Truong, Tri and Thu
+ * @author: Long Truong, Tri Bui, Thu Dang
  */
 public class SnakeGame {
     // CANVAS SCREEN SIZE AND AN UNIT GRID SIZE
