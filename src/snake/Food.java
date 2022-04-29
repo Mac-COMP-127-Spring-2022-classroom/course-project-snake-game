@@ -1,4 +1,4 @@
-package snakeGame;
+package snake;
 
 import java.awt.Color;
 import edu.macalester.graphics.Ellipse;

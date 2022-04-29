@@ -1,4 +1,4 @@
-package snakeGame;
+package snake;
 
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
