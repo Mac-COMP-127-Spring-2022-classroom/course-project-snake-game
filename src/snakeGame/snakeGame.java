@@ -1,4 +1,4 @@
-package snakeGameFolder;
+package snakeGame;
 
 import java.awt.Color;
 import java.util.ArrayList;
