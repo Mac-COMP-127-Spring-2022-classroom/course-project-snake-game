@@ -30,13 +30,23 @@ public class SnakeGame {
     // Direction variable of the snake heading
     private static char direction = 'O';
 
-    private static int delay_time = 70; // 70ms between each iteration
+
+    private static int delay_time = 70; // 70ms between each iteration animation
+
+    // Food variables
     private static Food food = new Food(0, 0);
+    private static int xPos =0;
+    private static int yPos =0;
+
+    // Snake head & snakes
     private static Snake snakeHead;
     private static int snakeBodyCount = 1;
-    private static Integer foodEaten = 0;
-    private static GraphicsText scoreValText;
     private static ArrayList<Snake> snakeBody = new ArrayList<>();
+
+    // Player Score
+    private static Integer foodEaten = 0;
+    private static GraphicsText scoreValText, highScoreValText; 
+    private static Integer highScoreValue =0;
     public static CanvasWindow canvas;
     public static boolean lose;
 
@@ -51,14 +61,11 @@ public class SnakeGame {
      * Load the game after the play button is hit
      */
     public static void playGame() {
-        if (!lose) {
-            setBackground();
-            objectsPlaced();
-            giveOutDirection();
-            gameAnimate();
-        } else {
-            loseGame();
-        }
+        setBackground();
+        addScorePanel();
+        objectsPlaced();
+        giveOutDirection();
+        gameAnimate();
     }
 
     /** Open menu with button */
@@ -99,7 +106,6 @@ public class SnakeGame {
             line.setStrokeWidth(0.5);
             canvas.add(line);
         }
-        addScorePanel();
     }
 
     /**
@@ -109,24 +115,66 @@ public class SnakeGame {
         // Score Panel is the overall interface on the rightside
         // scoreText just contains the word "YOUR SCORE".
         // scoreValText is the text displaying the value (how many foods was eaten)
+
+        // Declare all graphicsObject things
         GraphicsGroup scorePanel = new GraphicsGroup(SCREEN_WIDTH, 0);
         Rectangle panel = new Rectangle(0, 0, SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
-        panel.setFillColor(Color.LIGHT_GRAY);
         GraphicsText scoreText = new GraphicsText("YOUR SCORE:", 0, 0);
         scoreValText = new GraphicsText("0", 0, 0);
+        GraphicsText highScoreText = new GraphicsText("HIGH:",0,0);
+        highScoreValText = new GraphicsText("0");
+        // Add them to scorePanel
         scorePanel.add(panel);
         scorePanel.add(scoreText);
         scorePanel.add(scoreValText);
+        scorePanel.add(highScoreText);
+        scorePanel.add(highScoreValText);
+        // Set properties of each object
+
+        panel.setFillColor(Color.LIGHT_GRAY);
+
+        highScoreText.setCenter(SCORE_PANEL_WIDTH * 0.25, SCREEN_HEIGHT * 0.1);
+        highScoreText.setFont(FontStyle.BOLD, 15);
+
+        highScoreValText.setCenter(SCORE_PANEL_WIDTH * 0.5, SCREEN_HEIGHT * 0.1);
+        highScoreValText.setFont(FontStyle.PLAIN, 15);
+        
 
         scoreText.setFont(FontStyle.BOLD, 20);
-        scoreText.setCenter(SCORE_PANEL_WIDTH / 2, SCREEN_HEIGHT * 1 / 4);
+        scoreText.setCenter(SCORE_PANEL_WIDTH / 2, SCREEN_HEIGHT * 1 / 3);
+
         scoreValText.setFont(FontStyle.PLAIN, 40);
         scoreValText.setFillColor(Color.GRAY);
-        scoreValText.setCenter(SCORE_PANEL_WIDTH / 2, SCREEN_HEIGHT * 1 / 3);
+        scoreValText.setCenter(SCORE_PANEL_WIDTH / 2, SCREEN_HEIGHT * 0.45);
+
+        // Button to aid play again action
+        Button playAgain = new Button("Play Again");
+        scorePanel.add(playAgain);
+        playAgain.setCenter(SCORE_PANEL_WIDTH / 2, SCREEN_HEIGHT * 0.7);
+        playAgain.onClick( () -> {
+            playAgainAction();
+        });
 
         canvas.add(scorePanel);
     }
 
+    /** play Again sequence after player loses */
+    private static void playAgainAction() {
+        lose = false;
+        // unhide snake head
+        snakeHead.setFillColor(new Color(25, 51, 0));
+        snakeHead.setStrokeColor(Color.black);
+
+        for (int i=snakeBodyCount-1; i>0; i--) {
+            canvas.remove(snakeBody.get(i));
+            snakeBody.remove(i);
+        }
+        snakeBodyCount = 1;
+        foodEaten = 0;
+        scoreValText.setText("0");
+        snakeHead.setPosition(250, 250);
+        spawnFood();
+    }
     /**
      * Place food and snake head initially
      */
@@ -165,10 +213,27 @@ public class SnakeGame {
      * Relocate food after being eaten to a random location. Supporting function
      */
     private static void spawnFood() {
+        // Strict food spawn
+        // boolean isDuplicate = true;
+        // while (isDuplicate) {
+        //     isDuplicate = false;
+        //     Random rand = new Random();
+        //     xPos = rand.nextInt((SCREEN_WIDTH / UNIT_SIZE - 0) + 0) + 0;
+        //     yPos = rand.nextInt((SCREEN_HEIGHT / UNIT_SIZE - 0) + 0) + 0;
+        //     for (int i =snakeBodyCount; i>0; i--) {
+        //         if (snakeBody.get(i).getPosition().getX() == xPos && 
+        //             snakeBody.get(i).getPosition().getY() == yPos) {
+        //             isDuplicate = true;
+        //         }
+        //     }
+        // }
+        // food.setPosition(xPos * UNIT_SIZE, yPos * UNIT_SIZE);
+
         Random rand = new Random();
-        int xPos = rand.nextInt((SCREEN_WIDTH / UNIT_SIZE - 0) + 0) + 0;
-        int yPos = rand.nextInt((SCREEN_HEIGHT / UNIT_SIZE - 0) + 0) + 0;
+        xPos = rand.nextInt((SCREEN_WIDTH / UNIT_SIZE - 0) + 0) + 0;
+        yPos = rand.nextInt((SCREEN_HEIGHT / UNIT_SIZE - 0) + 0) + 0;
         food.setPosition(xPos * UNIT_SIZE, yPos * UNIT_SIZE);
+
     }
 
     /**
@@ -238,42 +303,48 @@ public class SnakeGame {
             // Check if player loses
             if (checkWallCollision() || checkBodyCollision()) {
                 lose = true;
-                loseGame();
+                // Nice trick to hide snakeHead
+                snakeHead.setFillColor(Color.LIGHT_GRAY);
+                snakeHead.setStrokeColor(Color.LIGHT_GRAY);
+            }
 
-                // canvas.closeWindow();
-            }
-            // Update snakeBody segment position
-            int oldX = (int) snakeHead.getPosition().getX();
-            int oldY = (int) snakeHead.getPosition().getY();
-            wait(delay_time);
-            for (int i = snakeBodyCount - 1; i > 0; i--) {
-                snakeBody.get(i).setPosition(snakeBody.get(i - 1).getPosition());
-            }
-            snakeHead.setPastPositionX(oldX);
-            snakeHead.setPastPositionY(oldY);
-            // Direct the snake head
-            switch (direction) {
-                case 'U':
-                    snakeHead.setPosition(oldX, oldY - UNIT_SIZE);
-                    break;
-                case 'D':
-                    snakeHead.setPosition(oldX, oldY + UNIT_SIZE);
-                    break;
-                case 'R':
-                    snakeHead.setPosition(oldX + UNIT_SIZE, oldY);
-                    break;
-                case 'L':
-                    snakeHead.setPosition(oldX - UNIT_SIZE, oldY);
-                    break;
-            }
-            // if snake eats food then spawn new food.
-            // Relocate food to a random position. Sprout a new body segment. Update the text for score value
-            if (snakeHead.getPosition().getX() == food.getPosition().getX()
-                && snakeHead.getPosition().getY() == food.getPosition().getY()) {
-                foodEaten += 1;
-                spawnFood();
-                sproutBodySegment();
-                scoreValText.setText(foodEaten.toString());
+            if (!lose) {
+                // Update snakeBody segment position
+                int oldX = (int) snakeHead.getPosition().getX();
+                int oldY = (int) snakeHead.getPosition().getY();
+                wait(delay_time);
+                for (int i = snakeBodyCount - 1; i > 0; i--) {
+                    snakeBody.get(i).setPosition(snakeBody.get(i - 1).getPosition());
+                }
+                snakeHead.setPastPositionX(oldX);
+                snakeHead.setPastPositionY(oldY);
+                // Direct the snake head
+                switch (direction) {
+                    case 'U':
+                        snakeHead.setPosition(oldX, oldY - UNIT_SIZE);
+                        break;
+                    case 'D':
+                        snakeHead.setPosition(oldX, oldY + UNIT_SIZE);
+                        break;
+                    case 'R':
+                        snakeHead.setPosition(oldX + UNIT_SIZE, oldY);
+                        break;
+                    case 'L':
+                        snakeHead.setPosition(oldX - UNIT_SIZE, oldY);
+                        break;
+                }
+                // if snake eats food then spawn new food.
+                // Relocate food to a random position. Sprout a new body segment. Update the text for score value
+                if (snakeHead.getPosition().getX() == food.getPosition().getX()
+                    && snakeHead.getPosition().getY() == food.getPosition().getY()) {
+                    foodEaten += 1;
+                    highScoreValue = Math.max(foodEaten, highScoreValue);
+                    spawnFood();
+                    sproutBodySegment();
+                    scoreValText.setText(foodEaten.toString());
+                    highScoreValText.setText(highScoreValue.toString());
+                }
+            
             }
         });
     }
@@ -289,23 +360,6 @@ public class SnakeGame {
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    /**
-     * Losing scene
-     */
-    private static void loseGame() {
-        Button playAgain = new Button("Play Again");
-        Button quitButton = new Button("Quit");
-       
-        canvas.add(playAgain, 250, 250);
-        canvas.add(quitButton, 265, 300);
-        canvas.draw();
-        quitButton.onClick(() -> canvas.closeWindow());
-        playAgain.onClick(() -> {
-            lose = false;
-            playGame();
-        });
     }
 }
 
