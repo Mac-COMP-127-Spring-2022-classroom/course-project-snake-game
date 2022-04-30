@@ -14,14 +14,25 @@ public class Snake extends Rectangle{
         this.setStrokeWidth(2);
     }
 
-    // Past position group methods before each moving iteration
+    /**
+     * Set the x position of the snake on the gameboard before moving 
+     */
+
     public void setPastPositionX(double xPos) {
         pastPositionX = xPos;
     }
 
+    /**
+     * Set the y position of the snake on the gameboard before moving 
+     */
+
     public void setPastPositionY(double yPos) {
         pastPositionY = yPos;
     }
+
+    /**
+     * Obtain the x, y positions of the snake on the gameboard before moving 
+     */
 
     public Point getPastPosition() {
         return new Point(pastPositionX, pastPositionY);
