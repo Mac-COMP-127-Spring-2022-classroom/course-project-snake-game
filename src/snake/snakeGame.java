@@ -2,7 +2,6 @@ package snake;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 
@@ -32,12 +31,12 @@ public class SnakeGame {
     private static char direction = 'O';
 
 
-    private static int delay_time = 70; // 70ms between each iteration animation
+    private static int delay_time = 115; // 70ms between each iteration animation
 
     // Food variables
     private static Food food = new Food(0, 0);
-    private static int xPos =0;
-    private static int yPos =0;
+    private static int xPos = 0;
+    private static int yPos = 0;
 
     // Snake head & snakes
     private static Snake snakeHead;
@@ -46,8 +45,8 @@ public class SnakeGame {
 
     // Player Score
     private static Integer foodEaten = 0;
-    private static GraphicsText scoreValText, highScoreValText; 
-    private static Integer highScoreValue =0;
+    private static GraphicsText scoreValText, highScoreValText;
+    private static Integer highScoreValue = 0;
     public static CanvasWindow canvas;
     public static boolean lose;
 
@@ -123,7 +122,7 @@ public class SnakeGame {
         Rectangle panel = new Rectangle(0, 0, SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
         GraphicsText scoreText = new GraphicsText("YOUR SCORE:", 0, 0);
         scoreValText = new GraphicsText("0", 0, 0);
-        GraphicsText highScoreText = new GraphicsText("HIGH:",0,0);
+        GraphicsText highScoreText = new GraphicsText("HIGH:", 0, 0);
         highScoreValText = new GraphicsText("0");
         // Add them to scorePanel
         scorePanel.add(panel);
@@ -140,7 +139,7 @@ public class SnakeGame {
 
         highScoreValText.setCenter(SCORE_PANEL_WIDTH * 0.5, SCREEN_HEIGHT * 0.1);
         highScoreValText.setFont(FontStyle.PLAIN, 15);
-        
+
 
         scoreText.setFont(FontStyle.BOLD, 20);
         scoreText.setCenter(SCORE_PANEL_WIDTH / 2, SCREEN_HEIGHT * 1 / 3);
@@ -153,7 +152,7 @@ public class SnakeGame {
         Button playAgain = new Button("Play Again");
         scorePanel.add(playAgain);
         playAgain.setCenter(SCORE_PANEL_WIDTH / 2, SCREEN_HEIGHT * 0.7);
-        playAgain.onClick( () -> {
+        playAgain.onClick(() -> {
             playAgainAction();
         });
 
@@ -167,7 +166,7 @@ public class SnakeGame {
         snakeHead.setFillColor(new Color(25, 51, 0));
         snakeHead.setStrokeColor(Color.black);
 
-        for (int i=snakeBodyCount-1; i>0; i--) {
+        for (int i = snakeBodyCount - 1; i > 0; i--) {
             canvas.remove(snakeBody.get(i));
             snakeBody.remove(i);
         }
@@ -177,6 +176,7 @@ public class SnakeGame {
         snakeHead.setPosition(250, 250);
         spawnFood();
     }
+
     /**
      * Place food and snake head initially
      */
@@ -218,16 +218,16 @@ public class SnakeGame {
         // Strict food spawn
         // boolean isDuplicate = true;
         // while (isDuplicate) {
-        //     isDuplicate = false;
-        //     Random rand = new Random();
-        //     xPos = rand.nextInt((SCREEN_WIDTH / UNIT_SIZE - 0) + 0) + 0;
-        //     yPos = rand.nextInt((SCREEN_HEIGHT / UNIT_SIZE - 0) + 0) + 0;
-        //     for (int i =snakeBodyCount; i>0; i--) {
-        //         if (snakeBody.get(i).getPosition().getX() == xPos && 
-        //             snakeBody.get(i).getPosition().getY() == yPos) {
-        //             isDuplicate = true;
-        //         }
-        //     }
+        // isDuplicate = false;
+        // Random rand = new Random();
+        // xPos = rand.nextInt((SCREEN_WIDTH / UNIT_SIZE - 0) + 0) + 0;
+        // yPos = rand.nextInt((SCREEN_HEIGHT / UNIT_SIZE - 0) + 0) + 0;
+        // for (int i =snakeBodyCount; i>0; i--) {
+        // if (snakeBody.get(i).getPosition().getX() == xPos &&
+        // snakeBody.get(i).getPosition().getY() == yPos) {
+        // isDuplicate = true;
+        // }
+        // }
         // }
         // food.setPosition(xPos * UNIT_SIZE, yPos * UNIT_SIZE);
 
@@ -301,6 +301,7 @@ public class SnakeGame {
      * to work. If the player loses. Close the Canvas Window Main-role function
      */
     private static void gameAnimate() {
+
         canvas.animate(() -> {
             // Check if player loses
             if (checkWallCollision() || checkBodyCollision()) {
@@ -314,7 +315,7 @@ public class SnakeGame {
                 // Update snakeBody segment position
                 int oldX = (int) snakeHead.getPosition().getX();
                 int oldY = (int) snakeHead.getPosition().getY();
-                wait(delay_time);
+                canvas.pause(delay_time);
                 for (int i = snakeBodyCount - 1; i > 0; i--) {
                     snakeBody.get(i).setPosition(snakeBody.get(i - 1).getPosition());
                 }
@@ -346,7 +347,7 @@ public class SnakeGame {
                     scoreValText.setText(foodEaten.toString());
                     highScoreValText.setText(highScoreValue.toString());
                 }
-            
+
             }
         });
     }
@@ -376,6 +377,7 @@ public class SnakeGame {
         canvas.draw();
         quitButton.onClick(() -> canvas.closeWindow());
         playAgain.onClick(() -> {
+
             lose = false;
             playGame();
         });
