@@ -16,7 +16,7 @@ import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.ui.Button;
 
 /**
- * Snake Game
+ * Snake Game›
  * 
  * @author: Long Truong, Tri Bui, Thu Dang
  */
