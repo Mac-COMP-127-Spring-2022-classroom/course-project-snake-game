@@ -1,10 +1,11 @@
 package snakeGameFolder;
 
+import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 import java.awt.Color;
 
-public class Snake extends Rectangle{
+public class Snake extends Rectangle {
     private double pastPositionX;
     private double pastPositionY;
     public Snake(double xPos, double yPos) {
@@ -27,4 +28,7 @@ public class Snake extends Rectangle{
         return new Point(pastPositionX, pastPositionY);
     }
     
+    public void removeFromCanvas(CanvasWindow canvas){
+        canvas.remove(this);
+    }
 }

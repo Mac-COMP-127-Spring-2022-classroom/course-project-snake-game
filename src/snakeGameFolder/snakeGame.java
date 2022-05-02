@@ -2,6 +2,7 @@ package snakeGameFolder;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -64,6 +65,7 @@ public class SnakeGame {
     /** Open menu with button */
     public static void openMenu() {
         canvas = new CanvasWindow("Snake Game", SCREEN_WIDTH + SCORE_PANEL_WIDTH, SCREEN_HEIGHT);
+        canvas.setBackground(Color.CYAN);
         GraphicsText gameTitle = new GraphicsText("SNAKE GAME");
         GraphicsText author = new GraphicsText("Presented by Long, Tri, and Thu");
         Button playButton = new Button("Play Game");
@@ -237,7 +239,20 @@ public class SnakeGame {
         canvas.animate(() -> {
             // Check if player loses
             if (checkWallCollision() || checkBodyCollision()) {
-                lose = true;
+                if (lose == false) {
+                    lose = true;
+                    canvas.remove(snakeHead);
+                    for (int i = snakeBodyCount - 1; i > 0; i--) {
+                        canvas.remove(snakeBody.get(i));
+                    }
+
+                    // for (int i = snakeBodyCount - 1; i > 0; i--) {
+                    //     snakeBody.remove(snakeBody.get(i));
+                    // }
+                    snakeBody.removeAll(snakeBody);
+                  
+                }
+
                 loseGame();
 
                 // canvas.closeWindow();
@@ -297,7 +312,7 @@ public class SnakeGame {
     private static void loseGame() {
         Button playAgain = new Button("Play Again");
         Button quitButton = new Button("Quit");
-       
+
         canvas.add(playAgain, 250, 250);
         canvas.add(quitButton, 265, 300);
         canvas.draw();
