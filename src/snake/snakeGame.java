@@ -216,22 +216,6 @@ public class SnakeGame {
      * Relocate food after being eaten to a random location. Supporting function
      */
     private static void spawnFood() {
-        // Strict food spawn
-        // boolean isDuplicate = true;
-        // while (isDuplicate) {
-        // isDuplicate = false;
-        // Random rand = new Random();
-        // xPos = rand.nextInt((SCREEN_WIDTH / UNIT_SIZE - 0) + 0) + 0;
-        // yPos = rand.nextInt((SCREEN_HEIGHT / UNIT_SIZE - 0) + 0) + 0;
-        // for (int i =snakeBodyCount; i>0; i--) {
-        // if (snakeBody.get(i).getPosition().getX() == xPos &&
-        // snakeBody.get(i).getPosition().getY() == yPos) {
-        // isDuplicate = true;
-        // }
-        // }
-        // }
-        // food.setPosition(xPos * UNIT_SIZE, yPos * UNIT_SIZE);
-
         Random rand = new Random();
         xPos = rand.nextInt((SCREEN_WIDTH / UNIT_SIZE - 0) + 0) + 0;
         yPos = rand.nextInt((SCREEN_HEIGHT / UNIT_SIZE - 0) + 0) + 0;
@@ -286,9 +270,6 @@ public class SnakeGame {
      */
     private static boolean checkBodyCollision() {
         for (int i = 1; i < snakeBodyCount; i++) {
-            // Notice that snakeSegment.getPosition() == snakeSegment.getPosition() does not work so I have to
-            // do
-            // it the longer way
             if (snakeBody.get(i).getPosition().getX() == snakeHead.getPosition().getX() &&
                 snakeBody.get(i).getPosition().getY() == snakeHead.getPosition().getY()) {
                 return true;
@@ -364,24 +345,6 @@ public class SnakeGame {
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    /**
-     * Losing scene
-     */
-    private static void loseGame() {
-        Button playAgain = new Button("Play Again");
-        Button quitButton = new Button("Quit");
-
-        canvas.add(playAgain, 250, 250);
-        canvas.add(quitButton, 265, 300);
-        canvas.draw();
-        quitButton.onClick(() -> canvas.closeWindow());
-        playAgain.onClick(() -> {
-
-            lose = false;
-            playGame();
-        });
     }
 }
 
