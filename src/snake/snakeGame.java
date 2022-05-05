@@ -162,6 +162,7 @@ public class SnakeGame {
     /** play Again sequence after player loses */
     private static void playAgainAction() {
         lose = false;
+        direction = 'O';
         // unhide snake head
         snakeHead.setFillColor(new Color(25, 51, 0));
         snakeHead.setStrokeColor(Color.black);
