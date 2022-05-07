@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
-
+import apple.laf.JRSUIConstants.Size;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsGroup;
@@ -49,6 +49,9 @@ public class SnakeGame {
     private static Integer highScoreValue = 0;
     public static CanvasWindow canvas;
     public static boolean lose;
+
+    // Screen Notifier
+    private static GraphicsText notifier;
 
     /**
      * Main method
@@ -285,9 +288,19 @@ public class SnakeGame {
     private static void gameAnimate() {
 
         canvas.animate(() -> {
+
             // Check if player loses
             if (checkWallCollision() || checkBodyCollision()) {
                 lose = true;
+
+                // Add GAME OVER notifier
+
+                notifier = new GraphicsText("GAME OVER");
+                notifier.setCenter(SCREEN_WIDTH * 0.3, SCREEN_HEIGHT * 0.5);
+                notifier.setFont(FontStyle.BOLD, 80);
+                notifier.setFillColor(Color.RED);
+                canvas.add(notifier);
+
                 // Nice trick to hide snakeHead
                 snakeHead.setFillColor(Color.LIGHT_GRAY);
                 snakeHead.setStrokeColor(Color.LIGHT_GRAY);
