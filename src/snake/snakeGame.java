@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+import apple.laf.JRSUIConstants.Size;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsGroup;
@@ -30,7 +31,7 @@ public class SnakeGame {
     private static char direction = 'O';
 
 
-    private static int delay_time = 115; // speed between each iteration animation
+    private static int delay_time = 115; // 70ms between each iteration animation
 
     // Food variables
     private static Food food = new Food(0, 0);
@@ -49,6 +50,8 @@ public class SnakeGame {
     public static CanvasWindow canvas;
     public static boolean lose;
 
+    // Screen Notifier
+    private static GraphicsText notifier;
 
     /**
      * Main method
@@ -161,14 +164,12 @@ public class SnakeGame {
 
     /** play Again sequence after player loses */
     private static void playAgainAction() {
-        // Some conditions
         lose = false;
         direction = 'O';
         // unhide snake head
         snakeHead.setFillColor(new Color(25, 51, 0));
         snakeHead.setStrokeColor(Color.black);
 
-        // Remove GameOver text
         for (int i = snakeBodyCount - 1; i > 0; i--) {
             canvas.remove(snakeBody.get(i));
             snakeBody.remove(i);
@@ -291,6 +292,15 @@ public class SnakeGame {
             // Check if player loses
             if (checkWallCollision() || checkBodyCollision()) {
                 lose = true;
+
+                // Add GAME OVER notifier
+
+                notifier = new GraphicsText("GAME OVER");
+                notifier.setCenter(SCREEN_WIDTH * 0.3, SCREEN_HEIGHT * 0.5);
+                notifier.setFont(FontStyle.BOLD, 80);
+                notifier.setFillColor(Color.RED);
+                canvas.add(notifier);
+
                 // Nice trick to hide snakeHead
                 snakeHead.setFillColor(Color.LIGHT_GRAY);
                 snakeHead.setStrokeColor(Color.LIGHT_GRAY);
