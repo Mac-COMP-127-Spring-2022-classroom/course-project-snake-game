@@ -110,9 +110,9 @@ public class SnakeGame {
             canvas.add(line);
         }
         notifier = new GraphicsText("GAME OVER");
-                notifier.setCenter(SCREEN_WIDTH * 0.3, SCREEN_HEIGHT * 0.5);
-                notifier.setFont(FontStyle.BOLD, 80);
-                notifier.setFillColor(Color.RED);
+        notifier.setCenter(SCREEN_WIDTH * 0.3, SCREEN_HEIGHT * 0.5);
+        notifier.setFont(FontStyle.BOLD, 80);
+        notifier.setFillColor(Color.RED);
     }
 
     /**
