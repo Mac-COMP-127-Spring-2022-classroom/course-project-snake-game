@@ -109,6 +109,8 @@ public class SnakeGame {
             line.setStrokeWidth(0.5);
             canvas.add(line);
         }
+
+        // Add the notifier for Game Over
         notifier = new GraphicsText("GAME OVER");
         notifier.setCenter(SCREEN_WIDTH * 0.3, SCREEN_HEIGHT * 0.5);
         notifier.setFont(FontStyle.BOLD, 80);
