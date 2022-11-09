@@ -10,10 +10,10 @@ We have done some research on the internet, and have been inspired by various so
 
 A. UML Diagram and Reddit discussion:
 
-1. https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2Flearnprogramming%2Fcomments%2Fbxmkkd%2Fuml_class_diagram_for_snake_game%2F&psig=AOvVaw2P26X-h6CciUldYwX9fSHR&ust=1651327417212000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjQppi4ufcCFQAAAAAdAAAAABAO
+1. https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2Flearnprogramming%2Fcomments%2Fbxmkkd%2Fuml_class_diagram_for_snake_game%2F&psig=AOvVaw2P26X-h6CciUldYwX9fSHR&ust=1651327417212000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjQppi4ufcCFQAAAAAdAAAAABAO \
 
-2. https://www.reddit.com/r/learnprogramming/comments/bxmkkd/uml_class_diagram_for_snake_game/
+2. https://www.reddit.com/r/learnprogramming/comments/bxmkkd/uml_class_diagram_for_snake_game/ \
 
-B. Snake Game Tutorial by Bro Code
+B. Snake Game Tutorial by Bro Code \
 
 https://www.youtube.com/watch?v=bI6e6qjJ8JQ
